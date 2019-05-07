@@ -9,6 +9,7 @@ Pre-requisite knowledge:
 
 Meiosis is a framework for writing generator code that for Nervos CKB. DApps on the CKB are divided into generators and verifiers. Generators create new state and submit it to the blockchain (CKB). Verifiers are the scripts, or smart contracts, that validate the submitted state according to predefined business rules by the DApp developer.
 
+`ckb-sdk-ruby` is included as a local directory rather than a gem due to rapid development on the official repo. It will be removed and replaced with the gem in the near future.
 
 ## On-Chain Subscriptions
 

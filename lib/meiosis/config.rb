@@ -24,6 +24,7 @@ module Meiosis
 
         if !api.system_script_cell
           wallet.install_system_script_cell(env_vars["system_script_cell_path"])
+        end
       end
     end
   end

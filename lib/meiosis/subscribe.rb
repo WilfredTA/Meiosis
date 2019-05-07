@@ -45,8 +45,6 @@ module Meiosis
     end
 
     def subscribe_to(event_name, event_check)
-        puts "THREAD COMPARISON"
-        p Thread.current == Thread.main
         @event_check = event_check
         @thread = Thread.new do
           Thread.abort_on_exception=true

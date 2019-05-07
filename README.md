@@ -11,23 +11,53 @@ Meiosis is a framework for writing generator code that for Nervos CKB. DApps on 
 
 `ckb-sdk-ruby` is included as a local directory rather than a gem due to rapid development on the official repo. It will be removed and replaced with the gem in the near future.
 
+The goal of Meiosis is currently to provide two things:
+1. An intuitive interface for generating and querying the CKB. Instead of an Object-Relational Mapping, it is a prototypical Object-Blockchain Mapping
+2. Provide asynchronous programming capabilities in response to on-chain events.
+
 ## On-Chain Subscriptions
 
-Meiosis allows you to subscribe to on-chain events with subscriptions. Meiosis' main thread runs in an event loop. Subscriptions to on-chain events allow you to define callbacks when those events occur. This is particularly useful when constructing a series of transactions, where subsequent transactions depend on successful confirmation of earlier ones.
+Meiosis allows you to subscribe to on-chain events with subscriptions. Meiosis' main thread runs in an event loop. Subscriptions are achieved by periodically monitoring or polling the blockchain for developer-defined (or built-in) conditions in a separate thread. Once the pre-specified conditions that define the "occurrence" of the event are detected, the main thread is notified and the callback assigned to that event will be executed in the main thread. This is particularly useful when constructing a series of transactions, where subsequent transactions depend on successful confirmation of earlier ones.
 
 See the udt demo for a demonstration of this.
 
-
+Built-in subscription: `Transaction#on_processed`
 ```
 transaction = transaction.send
-# Once the transaction has been processed, the block will execute.
+# Once the transaction has been processed, the callback will be executed. `Transaction#on_processed' is an example of a built-in event subscription
 transaction.on_processed do |result|
   p result
 
 end
-# This logs first
+
+# "Hello" will log before result is logged
 puts "hello"
 ```
+
+Or, define your own:
+
+```
+#Periodic polling
+detect_some_change = Proc.new do
+  t1 = Time.now
+  some_ckb_data = api.rpc_request(<...>)
+  while !check_data_for_target_changes(some_ckb_data)
+    while Time.now - t1 >= 5
+      t1 = Time.now
+      some_ckb_data = api.rpc_request(<...>)
+     end
+  end
+  some_ckb_data
+end
+
+
+# Subscribe to event
+
+change_has_occurred = Subscription.new('some_change', detect_some_change) do |data|
+  <do something with this data>
+end
+```
+
 ## Quick Setup
 
 Since both CKB and the Ruby SDK are under rapid development, I have included ckb-sdk-ruby directory within this repo. This will change and use the official, most up-to-date versions once it is more stable.

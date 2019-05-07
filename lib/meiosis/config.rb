@@ -62,17 +62,12 @@ module Meiosis
     end
 
     def self.check_for_subscription_results
-      if !@@subscriber.results.empty?
         while !@@subscriber.results.empty?
             res = @@subscriber.results.pop
-            puts "Event with Result"
-            p res.result
             cback = res.callback
             cback.call(res.result)
             @@subscriber.remove_subscription(res)
         end
-      end
-
     end
 
     def self.stop

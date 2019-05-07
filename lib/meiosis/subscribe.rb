@@ -37,7 +37,6 @@ module Meiosis
     end
 
     def initialize(event_name, event_check, &cback)
-      puts "Initializing new subscription"
       @id = SecureRandom.uuid()
       @@subscriptions << self
       @callback = cback
@@ -64,10 +63,3 @@ module Meiosis
     end
   end
 end
-
-
-# Workflow for subscribing to an event:
-
-# When a subscription is initiated, a new thread is spawned
-# This thread will poll until it returns a truthy value
-# Once it returns a truthy value, it will modify subscriptions and results

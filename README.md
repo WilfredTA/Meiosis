@@ -19,6 +19,17 @@ Meiosis allows you to subscribe to on-chain events with subscriptions. Meiosis' 
 
 See the udt demo for a demonstration of this.
 
+
+```
+transaction = transaction.send
+# Once the transaction has been processed, the block will execute.
+transaction.on_processed do |result|
+  p result
+
+end
+# This logs first
+puts "hello"
+```
 ## Quick Setup
 
 Since both CKB and the Ruby SDK are under rapid development, I have included ckb-sdk-ruby directory within this repo. This will change and use the official, most up-to-date versions once it is more stable.

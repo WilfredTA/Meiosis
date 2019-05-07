@@ -2,16 +2,13 @@
 
 *Note: This readme is a work in progress and subject to frequent change.*
 
-This article assumes familiarity with the basic philosophy and data structures on CKB. It assumes readers are familiar with CKB's primary purpose: as a security and verification layer, that state is generated off-chain by "generators" and verified on-chain by "contracts". It assumes readers are familiar with the cell model as well as the structure and role of scripts and transactions.
+Pre-requisite knowledge:
+1. Understanding of CKB structures (cell model, script, transaction)
+2. Knowledge of ruby language
+3. Understanding of the difference between generator code and verification code
 
-Meiosis is a framework for developing dApps on Nervos CKB written in Ruby. It therefore also assumes familiarity with the Ruby language. It is specifically aimed at developing the "generator" portion of dApps (the other portion being verification scripts or "contracts").
+Meiosis is a framework for writing generator code that for Nervos CKB. DApps on the CKB are divided into generators and verifiers. Generators create new state and submit it to the blockchain (CKB). Verifiers are the scripts, or smart contracts, that validate the submitted state according to predefined business rules by the DApp developer.
 
-Generators can construct any state they would like: they are free to submit any state within transactions. Depending on the state they are trying to generate, certain verification scripts ("contracts") will probably be run against the newly-submitted state. It therefore behooves developers to have an easy way to not only generate state, but generate the intended state. The more low-level details a developer needs to manage, the higher the probability that the resulting generator logic diverges from the intended logic unknowingly. Meiosis makes it easier to generate intended state in two ways:
-
-1. Encapsulating lower level details that the developer is not directly concerned with
-2. Providing abstractions that are easy to reason about
-
-Further, since generator code creates and submits the state that contracts then verify, there is going to be overlap in the logic between generator and verification code. By allowing developers to focus on the rules of state rather than all of the "plumbing", it not only makes the generator code easier to reason about, but the rules themselves easier to reason about.
 
 ## On-Chain Subscriptions
 

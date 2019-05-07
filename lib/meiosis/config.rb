@@ -80,6 +80,4 @@ module Meiosis
     end
 
   end
-
-
 end

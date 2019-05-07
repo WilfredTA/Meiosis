@@ -12,10 +12,6 @@ module Meiosis
        @@results
     end
 
-    def self.class_barrier
-      @@class_barrier
-    end
-
     def self.remove_subscription(subscription_object)
       new_subs = Queue.new
       while !@@subscriptions.empty?

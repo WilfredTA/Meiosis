@@ -2,7 +2,6 @@ module Meiosis
   class Subscription
     @@subscriptions = Queue.new
     @@results = Queue.new
-    @@class_barrier = Mutex.new
     attr_accessor :thread
     attr_reader :ready, :result, :checks, :pending, :callback, :id
     def self.subscriptions
@@ -54,10 +53,6 @@ module Meiosis
           @ready = true
           @result
         end
-    end
-
-    def safe_access(&blk)
-      @@class_barries.synchronize {blk.call}
     end
   end
 end

@@ -15,6 +15,31 @@ The goal of Meiosis is currently to provide two things:
 1. An intuitive interface for generating and querying the CKB. Instead of an Object-Relational Mapping, it is a prototypical Object-Blockchain Mapping
 2. Provide asynchronous programming capabilities in response to on-chain events.
 
+## Object-Blockchain Mapping
+Meiosis provides convenience classes for generating and querying CKB state in a familiar ORM-like fashion.
+
+For example:
+
+Query the CKB for a cell that matches specific filters
+`Cell.find_one({capacity: 521, lock: my_wallet.lock})`
+
+Or query the CKB for all cells that match specific filters.
+`Cell.find({capacity: 100, lock: my_wallet.lock}, limit: 10)`
+
+You can also easily create or update CKB-structures.
+
+Using a Cell as an example again:
+
+```
+cell = Cell.find_one({...})
+cell.data = <some_new_data> # Put some new data in this cell
+cell.capacity = cell.min_capacity # Update capacity you're willing to store in this cell
+cell.commit # Save changes to the blockchain
+```
+
+
+
+
 ## On-Chain Subscriptions
 
 Meiosis allows you to subscribe to on-chain events with subscriptions. Meiosis' main thread runs in an event loop. Subscriptions are achieved by periodically monitoring or polling the blockchain for developer-defined (or built-in) conditions in a separate thread. Once the pre-specified conditions that define the "occurrence" of the event are detected, the main thread is notified and the callback assigned to that event will be executed in the main thread. This is particularly useful when constructing a series of transactions, where subsequent transactions depend on successful confirmation of earlier ones.
